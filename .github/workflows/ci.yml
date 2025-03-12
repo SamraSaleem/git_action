@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false  # ✅ Ensures tests run on both versions even if one fails
       matrix:
         node-version: [16.x, 18.x]
 
@@ -27,7 +28,10 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install  # ✅ Step 3: Install project dependencies
+        run: npm ci  # ✅ Step 3: Use 'ci' for clean installs
+
+      - name: Verify Jest installation
+        run: npx jest --version  # ✅ Debug Jest issues
 
       - name: Run tests
         run: npm test  # ✅ Step 4: Run Jest tests
